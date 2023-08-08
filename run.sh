@@ -25,7 +25,7 @@ elif [ $(uname) = "Darwin" ]; then
 fi
 
 readonly MAVEN_REPO="${HOME}/.m2"
-readonly MAVEN_URL="https://dlcdn.apache.org/maven/maven-3/3.9.2/binaries/apache-maven-3.9.2-bin.tar.gz"
+readonly MAVEN_URL="https://dlcdn.apache.org/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bin.tar.gz"
 readonly MAVEN_ARCHIVE=$(basename ${MAVEN_URL})
 readonly MAVEN_DIRECTORY=$(basename -s -bin.tar.gz ${MAVEN_URL})
 readonly MAVEN_TMP_PATH="/var/tmp/${MAVEN_ARCHIVE}"
@@ -111,6 +111,11 @@ function install_maven() {
 		wget -nc -O "${MAVEN_TMP_PATH}" "${MAVEN_URL}"
 		tar -xf "${MAVEN_TMP_PATH}"
 	fi
+	if [ ! -e "${MAVEN}" ]; then
+		echo "ERROR: Failed to install maven. Expected path: ${MAVEN}"
+		exit 1
+	fi
+
 }
 
 install_jdk
